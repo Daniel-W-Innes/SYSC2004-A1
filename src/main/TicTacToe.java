@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * @author Daniel Innes 101067175
- *
+ * 
  */
 public class TicTacToe {
 
@@ -103,30 +103,86 @@ public class TicTacToe {
 		int i;
 		int j;
 
-		char testChar;
+//		char testChar;
+//		for (i = 0; i < nRows; ++i) {
+//			if (grid[i][0] != ' ') {
+//				testChar = grid[i][0];
+//				for (j = 1; j < nColumns; ++j) {
+//					if (grid[i][j] != testChar)
+//						break;
+//					if (j == numToWin - 1)
+//						return charToEnum(testChar);
+//				}
+//			}
+//		}
+//		for (i = 0; i < nColumns; ++i) {
+//			if (grid[0][i] != ' ') {
+//				testChar = grid[0][i];
+//				for (j = 1; j < nRows; ++j) {
+//					if (grid[j][i] != testChar)
+//						break;
+//					if (j == numToWin - 1)
+//						return charToEnum(testChar);
+//				}
+//			}
+//		}
 		for (i = 0; i < nRows; ++i) {
-			if (grid[i][0] != ' ') {
-				testChar = grid[i][0];
-				for (j = 1; j < nColumns; ++j) {
-					if (grid[i][j] != testChar)
-						break;
-					if (j == numToWin - 1)
-						return charToEnum(testChar);
-				}
-			}
-		}
-		for (i = 0; i < nColumns; ++i) {
-			if (grid[0][i] != ' ') {
-				testChar = grid[0][i];
-				for (j = 1; j < nRows; ++j) {
-					if (grid[j][i] != testChar)
-						break;
-					if (j == numToWin - 1)
-						return charToEnum(testChar);
+			for (j = 0; j < nColumns; ++j) {
+				if (grid[i][j] != ' ') {
+					if (isVictory(i, j)) {
+						return charToEnum(grid[i][j]);
+					}
 				}
 			}
 		}
 		return TicTacToeEnum.IN_PROGRESS;
+	}
+
+	private boolean isVictory(int x, int y) {
+		int i;
+		int h = 1;
+		int v = 1;
+		int d = 1;
+		char testChar = grid[x][y];
+		for (i = x - 1; i > x - numToWin; --i) {
+			if (i >= 0) {
+				if (grid[i][y] == testChar) {
+					h++;
+				} else {
+					break;
+				}
+			}
+		}
+		for (i = y - 1; i > y - numToWin; --i) {
+			if (i >= 0) {
+				if (grid[x][i] == testChar) {
+					v++;
+				} else {
+					break;
+				}
+			}
+		}
+		for (i = x + 1; i < x + numToWin; ++i) {
+			if (i < nRows) {
+				if (grid[i][y] == testChar) {
+					h++;
+				} else {
+					break;
+				}
+			}
+		}
+		for (i = y + 1; i < y + numToWin; ++i) {
+			if (i < nColumns) {
+				if (grid[x][i] == testChar) {
+					v++;
+				} else {
+					break;
+				}
+			}
+		}
+		if (h >= numToWin || v >= numToWin || d >= numToWin)
+			return true;
+		return false;
 	}
 
 	public String toString() {
