@@ -1,4 +1,8 @@
 
+/**
+ * @author Daniel Innes 101067175
+ *
+ */
 public class DiceClient {
 	public static void main(String[] args) {
 		final int numRuns = 4000;

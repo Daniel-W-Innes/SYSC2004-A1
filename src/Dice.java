@@ -1,10 +1,13 @@
 
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * @author Daniel Innes 101067175
+ *
+ */
 public class Dice {
 
 	private Random random;
