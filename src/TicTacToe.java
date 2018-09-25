@@ -17,7 +17,7 @@ public class TicTacToe {
 	private int nMarks;
 
 	public static void main(String args[]) {
-		TicTacToe game = new TicTacToe('X');
+		TicTacToe game = new TicTacToe(6,7,3,'X');
 		Scanner scanner = new Scanner(System.in);
 
 		do {
@@ -102,30 +102,7 @@ public class TicTacToe {
 			return TicTacToeEnum.DRAW;
 		int i;
 		int j;
-
-//		char testChar;
-//		for (i = 0; i < nRows; ++i) {
-//			if (grid[i][0] != ' ') {
-//				testChar = grid[i][0];
-//				for (j = 1; j < nColumns; ++j) {
-//					if (grid[i][j] != testChar)
-//						break;
-//					if (j == numToWin - 1)
-//						return charToEnum(testChar);
-//				}
-//			}
-//		}
-//		for (i = 0; i < nColumns; ++i) {
-//			if (grid[0][i] != ' ') {
-//				testChar = grid[0][i];
-//				for (j = 1; j < nRows; ++j) {
-//					if (grid[j][i] != testChar)
-//						break;
-//					if (j == numToWin - 1)
-//						return charToEnum(testChar);
-//				}
-//			}
-//		}
+		
 		for (i = 0; i < nRows; ++i) {
 			for (j = 0; j < nColumns; ++j) {
 				if (grid[i][j] != ' ') {
@@ -140,14 +117,15 @@ public class TicTacToe {
 
 	private boolean isVictory(int x, int y) {
 		int i;
-		int h = 1;
-		int v = 1;
-		int d = 1;
+		int j;
+		int numHorizontal = 1;
+		int numVertical = 1;
+		int numDiagonal = 1;
 		char testChar = grid[x][y];
 		for (i = x - 1; i > x - numToWin; --i) {
 			if (i >= 0) {
 				if (grid[i][y] == testChar) {
-					h++;
+					numHorizontal++;
 				} else {
 					break;
 				}
@@ -156,7 +134,7 @@ public class TicTacToe {
 		for (i = y - 1; i > y - numToWin; --i) {
 			if (i >= 0) {
 				if (grid[x][i] == testChar) {
-					v++;
+					numVertical++;
 				} else {
 					break;
 				}
@@ -165,7 +143,7 @@ public class TicTacToe {
 		for (i = x + 1; i < x + numToWin; ++i) {
 			if (i < nRows) {
 				if (grid[i][y] == testChar) {
-					h++;
+					numHorizontal++;
 				} else {
 					break;
 				}
@@ -174,13 +152,39 @@ public class TicTacToe {
 		for (i = y + 1; i < y + numToWin; ++i) {
 			if (i < nColumns) {
 				if (grid[x][i] == testChar) {
-					v++;
+					numVertical++;
 				} else {
 					break;
 				}
 			}
 		}
-		if (h >= numToWin || v >= numToWin || d >= numToWin)
+		for (i = x + 1; i < x + numToWin; ++i) {
+			for (j = y + 1; j < y + numToWin; ++j) {
+				if (i < nRows) {
+					if (j < nColumns) {
+						if (grid[i][j] == testChar) {
+							numDiagonal++;
+						} else {
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (i = x - 1; i > x - numToWin; --i) {
+			for (j = y - 1; j > y - numToWin; --j) {
+				if (i >= 0) {
+					if (j >= 0) {
+						if (grid[i][j] == testChar) {
+							numDiagonal++;
+						} else {
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (numHorizontal >= numToWin || numVertical >= numToWin || numDiagonal >= numToWin)
 			return true;
 		return false;
 	}
