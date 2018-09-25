@@ -17,7 +17,7 @@ public class TicTacToe {
 	private int nMarks;
 
 	public static void main(String args[]) {
-		TicTacToe game = new TicTacToe(6,7,3,'X');
+		TicTacToe game = new TicTacToe('X');
 		Scanner scanner = new Scanner(System.in);
 
 		do {
