@@ -58,7 +58,7 @@ public class TicTacToe {
 	}
 
 	/**
-	 * Main constructor generators a 3x3 TicTacToe grid.
+	 * Main constructor generates a 3x3 TicTacToe grid.
 	 * 
 	 * @param initalTurn The char representing the first player.
 	 */
@@ -70,7 +70,7 @@ public class TicTacToe {
 	}
 
 	/**
-	 * Secondary constructor generators a TicTacToe grid of given size.
+	 * Secondary constructor generates a TicTacToe grid of given size.
 	 * 
 	 * @param nRows      The number of rows in the TicTacToe grid to be generated.
 	 * @param nColumns   The number of rows in the TicTacToe grid to be generated.
@@ -162,6 +162,12 @@ public class TicTacToe {
 		}
 	}
 
+	/**
+	 * Determine if there is a winner and return the gameState that reflects the new
+	 * state of the game.
+	 * 
+	 * @return The resulting gameState.
+	 */
 	private TicTacToeEnum findWinner() {
 		if (nMarks == nRows * nColumns)
 			return TicTacToeEnum.DRAW;
@@ -180,6 +186,13 @@ public class TicTacToe {
 		return TicTacToeEnum.IN_PROGRESS;
 	}
 
+	/**
+	 * Determine if the mark at (x,y) is part of of a victory.
+	 * 
+	 * @param x The x location in the TicTacToe grid
+	 * @param y The y location in the TicTacToe grid
+	 * @return A boolean answering the question is the mark in a victory
+	 */
 	private boolean isVictory(int x, int y) {
 		int i;
 		int j;
@@ -254,6 +267,13 @@ public class TicTacToe {
 		return false;
 	}
 
+	/**
+	 * return a string representing the TicTacToe grid e.g.
+	 * X | O |   | 
+	 * X | O |   | 
+	 *   |   |   |
+	 * @see java.lang.Object#toString()'
+	 */
 	public String toString() {
 		String output = "";
 		for (int i = 0; i < nRows; ++i) {

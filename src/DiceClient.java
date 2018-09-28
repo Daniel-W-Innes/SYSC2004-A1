@@ -4,6 +4,9 @@
  *
  */
 public class DiceClient {
+	/**
+	 * The main client for TicTacToe.
+	 */
 	public static void main(String[] args) {
 		final int numRuns = 4000;
 		int[] output = new int[numRuns + 1];
@@ -21,35 +24,40 @@ public class DiceClient {
 		System.out.println("The standard deviation of the rolls was " + std_dev(output));
 		System.out.println(genHist(output, 6, 1));
 	}
-
-	private static double std_dev(int a[]) {
-		if (a.length == 0)
+	
+	/**
+	 * Computes the standard deviation of the input.
+	 * @param input 
+	 * @return
+	 */
+	private static double std_dev(int input[]) {
+		if (input.length == 0)
 			return 0.0;
 		double sum = 0;
 		double sq_sum = 0;
-		for (int i = 0; i < a.length; ++i) {
-			sum += a[i];
-			sq_sum += a[i] * a[i];
+		for (int i = 0; i < input.length; ++i) {
+			sum += input[i];
+			sq_sum += input[i] * input[i];
 		}
-		double mean = sum / a.length;
-		double variance = sq_sum / a.length - mean * mean;
+		double mean = sum / input.length;
+		double variance = sq_sum / input.length - mean * mean;
 		return Math.sqrt(variance);
 	}
 
-	private static double mean(int[] a) {
-		if (a.length == 0)
+	private static double mean(int[] input) {
+		if (input.length == 0)
 			return 0.0;
 		double sum = 0;
-		for (int i = 0; i < a.length; ++i) {
-			sum += a[i];
+		for (int i = 0; i < input.length; ++i) {
+			sum += input[i];
 		}
-		return sum / a.length;
+		return sum / input.length;
 	}
 
-	private static String genHist(int[] a, int max, int min) {
+	private static String genHist(int[] input, int max, int min) {
 		int[] freq = new int[max + 1];
-		for (int i = 0; i < a.length; ++i) {
-			freq[a[i]]++;
+		for (int i = 0; i < input.length; ++i) {
+			freq[input[i]]++;
 		}
 		String output = "The histogram of the rolls is: \n";
 		for (int i = min; i <= max; ++i) {
