@@ -1,4 +1,5 @@
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -43,16 +44,21 @@ public class TicTacToe {
 	public static void main(String args[]) {
 		TicTacToe game = new TicTacToe('X');
 		Scanner scanner = new Scanner(System.in);
+		Random r = new Random();
 
 		do {
 			System.out.println(game.toString());
 			System.out.println(game.getTurn() + ": Where do you want to mark? Enter row column");
-			int row = scanner.nextInt();
-			int column = scanner.nextInt();
-			scanner.nextLine();
+			/*
+			 * int row = scanner.nextInt(); int column = scanner.nextInt();
+			 */
+			int row = r.nextInt(3);
+			int column = r.nextInt(3);
+			// scanner.nextLine();
 			game.takeTurn(row, column);
 
 		} while (game.getGameState() == TicTacToeEnum.IN_PROGRESS);
+		System.out.println(game.toString());
 		System.out.println(game.getGameState());
 		scanner.close();
 	}
@@ -78,11 +84,11 @@ public class TicTacToe {
 	 * @param initalTurn The char representing the first player.
 	 */
 	public TicTacToe(int nRows, int nColumns, int numToWin, char initalTurn) {
-		if (nRows < 0)
+		if (nRows <= 0)
 			throw new IllegalArgumentException("Nice msg");
-		if (nColumns < 0)
+		if (nColumns <= 0)
 			throw new IllegalArgumentException("Nice msg");
-		if (numToWin < 0)
+		if (numToWin <= 0)
 			throw new IllegalArgumentException("Nice msg");
 		this.nRows = nRows;
 		this.nColumns = nColumns;
@@ -152,13 +158,13 @@ public class TicTacToe {
 		if (row < nRows && column < nColumns) {
 			if (grid[row][column] == ' ') {
 				grid[row][column] = turn;
+				nMarks++;
+				gameState = findWinner();
 				if (turn == 'X')
 					turn = 'O';
 				else
 					turn = 'X';
 			}
-			nMarks++;
-			gameState = findWinner();
 		}
 	}
 
@@ -169,21 +175,25 @@ public class TicTacToe {
 	 * @return The resulting gameState.
 	 */
 	private TicTacToeEnum findWinner() {
-		if (nMarks == nRows * nColumns)
-			return TicTacToeEnum.DRAW;
+
 		int i;
 		int j;
 
 		for (i = 0; i < nRows; ++i) {
 			for (j = 0; j < nColumns; ++j) {
-				if (grid[i][j] != ' ') {
+				if (grid[i][j] == turn) {
 					if (isVictory(i, j)) {
 						return charToEnum(grid[i][j]);
 					}
 				}
 			}
 		}
-		return TicTacToeEnum.IN_PROGRESS;
+		if (nMarks == nRows * nColumns) {
+			return TicTacToeEnum.DRAW;
+		} else {
+			return TicTacToeEnum.IN_PROGRESS;
+		}
+
 	}
 
 	/**
@@ -195,7 +205,6 @@ public class TicTacToe {
 	 */
 	private boolean isVictory(int x, int y) {
 		int i;
-		int j;
 		int numHorizontal = 1;
 		int numVertical = 1;
 		int numDiagonal = 1;
@@ -236,28 +245,24 @@ public class TicTacToe {
 				}
 			}
 		}
-		for (i = x + 1; i < x + numToWin; ++i) {
-			for (j = y + 1; j < y + numToWin; ++j) {
-				if (i < nRows) {
-					if (j < nColumns) {
-						if (grid[i][j] == testChar) {
-							numDiagonal++;
-						} else {
-							break;
-						}
+		for (i = 1; i < numToWin; ++i) {
+			if (i + x < nRows) {
+				if (i + y < nColumns) {
+					if (grid[i + x][i + y] == testChar) {
+						numDiagonal++;
+					} else {
+						break;
 					}
 				}
 			}
 		}
-		for (i = x - 1; i > x - numToWin; --i) {
-			for (j = y - 1; j > y - numToWin; --j) {
-				if (i >= 0) {
-					if (j >= 0) {
-						if (grid[i][j] == testChar) {
-							numDiagonal++;
-						} else {
-							break;
-						}
+		for (i = -1; i > -numToWin; --i) {
+			if (i + x >= 0) {
+				if (i + y >= 0) {
+					if (grid[i + x][i + y] == testChar) {
+						numDiagonal++;
+					} else {
+						break;
 					}
 				}
 			}
@@ -268,10 +273,9 @@ public class TicTacToe {
 	}
 
 	/**
-	 * return a string representing the TicTacToe grid e.g.
-	 * X | O |   | 
-	 * X | O |   | 
-	 *   |   |   |
+	 * return a string representing the TicTacToe grid e.g. X | O | | X | O | | | |
+	 * |
+	 * 
 	 * @see java.lang.Object#toString()'
 	 */
 	public String toString() {
