@@ -1,5 +1,5 @@
 
-import java.util.Random;
+//debug Lines: import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -44,17 +44,16 @@ public class TicTacToe {
 	public static void main(String args[]) {
 		TicTacToe game = new TicTacToe('X');
 		Scanner scanner = new Scanner(System.in);
-		Random r = new Random();
+		//debug Lines: Random r = new Random();
 
 		do {
 			System.out.println(game.toString());
 			System.out.println(game.getTurn() + ": Where do you want to mark? Enter row column");
-			/*
-			 * int row = scanner.nextInt(); int column = scanner.nextInt();
-			 */
-			int row = r.nextInt(3);
-			int column = r.nextInt(3);
-			// scanner.nextLine();
+
+			int row = scanner.nextInt();
+			int column = scanner.nextInt();
+			scanner.nextLine();
+			//debug Lines: int row = r.nextInt(3); int column = r.nextInt(3);
 			game.takeTurn(row, column);
 
 		} while (game.getGameState() == TicTacToeEnum.IN_PROGRESS);
