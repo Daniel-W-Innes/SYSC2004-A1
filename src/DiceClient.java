@@ -27,8 +27,8 @@ public class DiceClient {
 	
 	/**
 	 * Computes the standard deviation of the input.
-	 * @param input 
-	 * @return
+	 * @param input The input numbers to calculate the standard deviation.
+	 * @return The standard deviation of the input numbers.
 	 */
 	private static double std_dev(int input[]) {
 		if (input.length == 0)
@@ -44,6 +44,11 @@ public class DiceClient {
 		return Math.sqrt(variance);
 	}
 
+	/**
+	 * Computes the mean of the input.
+	 * @param input The input numbers to calculate the mean.
+	 * @return The mean of the input numbers.
+	 */
 	private static double mean(int[] input) {
 		if (input.length == 0)
 			return 0.0;
@@ -54,6 +59,13 @@ public class DiceClient {
 		return sum / input.length;
 	}
 
+	/**
+	 * Generate some returns the histogram as a string.
+	 * @param input All numbers to be part of the histogram.
+	 * @param max The maximum number in input 
+	 * @param min The minimum number in input 
+	 * @return Histogram As a string following the formatting depicted in the outline.
+	 */
 	private static String genHist(int[] input, int max, int min) {
 		int[] freq = new int[max + 1];
 		for (int i = 0; i < input.length; ++i) {

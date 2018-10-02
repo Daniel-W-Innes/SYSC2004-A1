@@ -96,7 +96,7 @@ public class Dice {
 	/**
 	 * return a string representing all values e.g. 4 5 6
 	 * 
-	 * @see java.lang.Object#toString()'
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		String output = "";

@@ -1,5 +1,5 @@
 
-//debug Lines: import java.util.Random;
+//debug statement: import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -44,16 +44,17 @@ public class TicTacToe {
 	public static void main(String args[]) {
 		TicTacToe game = new TicTacToe('X');
 		Scanner scanner = new Scanner(System.in);
-		//debug Lines: Random r = new Random();
+		//debug statement: Random r = new Random();
 
 		do {
 			System.out.println(game.toString());
 			System.out.println(game.getTurn() + ": Where do you want to mark? Enter row column");
 
-			int row = scanner.nextInt();
-			int column = scanner.nextInt();
-			scanner.nextLine();
-			//debug Lines: int row = r.nextInt(3); int column = r.nextInt(3);
+			
+			  int row = scanner.nextInt(); int column = scanner.nextInt();
+			  scanner.nextLine();
+			 
+			//debug statement: int row = r.nextInt(10); int column = r.nextInt(10);
 			game.takeTurn(row, column);
 
 		} while (game.getGameState() == TicTacToeEnum.IN_PROGRESS);
@@ -79,16 +80,14 @@ public class TicTacToe {
 	 * 
 	 * @param nRows      The number of rows in the TicTacToe grid to be generated.
 	 * @param nColumns   The number of rows in the TicTacToe grid to be generated.
-	 * @param numToWin   The number connected of cells needed to win.
+	 * @param numToWin   The number of marks needed to win.
 	 * @param initalTurn The char representing the first player.
 	 */
 	public TicTacToe(int nRows, int nColumns, int numToWin, char initalTurn) {
-		if (nRows <= 0)
-			throw new IllegalArgumentException("Nice msg");
-		if (nColumns <= 0)
-			throw new IllegalArgumentException("Nice msg");
+		if (nRows <= 0 || nColumns <= 0)
+			throw new IllegalArgumentException("Please insert positive dimensions.");
 		if (numToWin <= 0)
-			throw new IllegalArgumentException("Nice msg");
+			throw new IllegalArgumentException("The number of marks needed to win must be positive");
 		this.nRows = nRows;
 		this.nColumns = nColumns;
 		this.numToWin = numToWin;
@@ -177,7 +176,7 @@ public class TicTacToe {
 
 		int i;
 		int j;
-
+		// Look through the grid and determine if any of the marks of the player who just went Are part of a victory.
 		for (i = 0; i < nRows; ++i) {
 			for (j = 0; j < nColumns; ++j) {
 				if (grid[i][j] == turn) {
@@ -187,6 +186,7 @@ public class TicTacToe {
 				}
 			}
 		}
+		//Check if The grid is a draw.
 		if (nMarks == nRows * nColumns) {
 			return TicTacToeEnum.DRAW;
 		} else {
@@ -208,6 +208,7 @@ public class TicTacToe {
 		int numVertical = 1;
 		int numDiagonal = 1;
 		char testChar = grid[x][y];
+		// Counting the number of marks in a row in the negative X direction.
 		for (i = x - 1; i > x - numToWin; --i) {
 			if (i >= 0) {
 				if (grid[i][y] == testChar) {
@@ -217,6 +218,7 @@ public class TicTacToe {
 				}
 			}
 		}
+		// Counting the number of marks in a row in the negative Y direction.
 		for (i = y - 1; i > y - numToWin; --i) {
 			if (i >= 0) {
 				if (grid[x][i] == testChar) {
@@ -226,6 +228,19 @@ public class TicTacToe {
 				}
 			}
 		}
+		// Counting the number of marks in a row in the negative diagonal direction.
+		for (i = -1; i > -numToWin; --i) {
+			if (i + x >= 0) {
+				if (i + y >= 0) {
+					if (grid[i + x][i + y] == testChar) {
+						numDiagonal++;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		// Counting the number of marks in a row in the positive X direction.
 		for (i = x + 1; i < x + numToWin; ++i) {
 			if (i < nRows) {
 				if (grid[i][y] == testChar) {
@@ -235,6 +250,7 @@ public class TicTacToe {
 				}
 			}
 		}
+		// Counting the number of marks in a row in the positive Y direction.
 		for (i = y + 1; i < y + numToWin; ++i) {
 			if (i < nColumns) {
 				if (grid[x][i] == testChar) {
@@ -244,20 +260,10 @@ public class TicTacToe {
 				}
 			}
 		}
+		// Counting the number of marks in a row in the positive diagonal direction.
 		for (i = 1; i < numToWin; ++i) {
 			if (i + x < nRows) {
 				if (i + y < nColumns) {
-					if (grid[i + x][i + y] == testChar) {
-						numDiagonal++;
-					} else {
-						break;
-					}
-				}
-			}
-		}
-		for (i = -1; i > -numToWin; --i) {
-			if (i + x >= 0) {
-				if (i + y >= 0) {
 					if (grid[i + x][i + y] == testChar) {
 						numDiagonal++;
 					} else {
@@ -275,7 +281,7 @@ public class TicTacToe {
 	 * return a string representing the TicTacToe grid e.g. X | O | | X | O | | | |
 	 * |
 	 * 
-	 * @see java.lang.Object#toString()'
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		String output = "";
